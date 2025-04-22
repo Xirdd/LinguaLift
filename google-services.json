@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "752088035900",
+    "project_id": "lingualift-e9bc5",
+    "storage_bucket": "lingualift-e9bc5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752088035900:android:9142a2aa4ed5103e5b4939",
+        "android_client_info": {
+          "package_name": "com.chadrix.lingualift"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752088035900-e1ns7ogmo2shn8cvfcj2d4n674ahektb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chadrix.lingualift",
+            "certificate_hash": "0f2f423a6594edd79027a1418a07cf823be76c05"
+          }
+        },
+        {
+          "client_id": "752088035900-unm0ge4lr2ndmfov0d1aftlps5nu4f1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-OcBTG9daplh3MjCqaTGi2EqOUZ3oFWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752088035900-unm0ge4lr2ndmfov0d1aftlps5nu4f1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
