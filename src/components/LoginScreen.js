@@ -42,7 +42,7 @@ export default function LoginScreen() {
     return (
         <SafeAreaView style={styles.safeContainer}>
             <View style={styles.container}>
-                <Text style={styles.title}>Login Page</Text>
+                <Text style={styles.title}>Login</Text>
 
                 <TextInput
                     style={styles.input}
