@@ -55,4 +55,16 @@
         color: '#2B2B2B',
         fontWeight: '600',
     },
+    logoutButton: {
+        backgroundColor: '#ef4444',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    logoutButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
     });

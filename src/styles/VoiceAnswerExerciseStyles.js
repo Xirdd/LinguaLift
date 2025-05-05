@@ -54,4 +54,17 @@
         textAlign: 'center',
         marginTop: 10,
     },
+    retryButton: {
+        backgroundColor: '#f59e0b',
+        padding: 12,
+        marginTop: 16,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    retryButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    
     });
