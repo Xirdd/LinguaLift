@@ -11,10 +11,19 @@
     const handleLevelSelect = async (level) => {
         try {
         await AsyncStorage.setItem('selectedLevel', level);
-        navigation.reset({
+
+        // Navigate to the appropriate module based on the selected language
+        if (selectedLanguage === 'English') {
+            navigation.reset({
             index: 0,
-            routes: [{ name: 'Home' }],
-        });
+            routes: [{ name: 'EnglishModule' }],
+            });
+        } else if (selectedLanguage === 'Spanish') {
+            navigation.reset({
+            index: 0,
+            routes: [{ name: 'SpanishModule' }],
+            });
+        }
         } catch (error) {
         console.error('Error saving level:', error);
         }

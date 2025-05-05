@@ -1,4 +1,4 @@
-    import React, { useState, useEffect } from 'react';
+    import React, { useEffect, useState } from 'react';
     import {
     SafeAreaView,
     View,
@@ -11,12 +11,11 @@
     import styles from '../styles/HomeScreenStyles';
 
     const lessons = [
-    { title: 'Basics 1', icon: 'language', completed: true },
-    { title: 'Basics 2', icon: 'book', completed: false },
+    { title: 'Basic 1', icon: 'language', completed: true },
+    { title: 'Basic 2', icon: 'book', completed: false },
     ];
 
-    export default function HomeScreen({ navigation }) {
-    const [selectedOption, setSelectedOption] = useState(null);
+    export default function SpanishModule({ navigation }) {
     const [language, setLanguage] = useState('');
     const [level, setLevel] = useState('');
 
@@ -32,22 +31,13 @@
 
     const handleLessonPress = (lesson) => {
         switch (lesson.title) {
-        case 'Basics 1':
+        case 'Basic 1':
             navigation.navigate('Basics1Exercise');
             break;
-        case 'Basics 2':
+        case 'Basic 2':
             navigation.navigate('VoiceAnswerExercise');
             break;
-        default:
-            break;
         }
-    };
-
-    const handleSpeechPress = () => {
-        navigation.navigate('SpeechRecognitionScreen', {
-        question: 'How do you say "Hello" in Spanish?',
-        correctAnswer: 'Hola',
-        });
     };
 
     const handleReset = async () => {
@@ -76,26 +66,17 @@
             </View>
 
             {/* Language and Level Info */}
-            <View style={{ marginVertical: 10, alignItems: 'center' }}>
-            <Text style={{ fontSize: 16 }}>Language: {language}</Text>
-            <Text style={{ fontSize: 16 }}>Level: {level}</Text>
-            <TouchableOpacity onPress={handleReset}>
-                <Text style={{ color: '#6366F1', marginTop: 5 }}>Change Language/Level</Text>
-            </TouchableOpacity>
+            <View style={{ marginVertical: 20, alignItems: 'flex-start', width: '100%' }}>
+            <Text style={{ fontSize: 16, color: '#fff', fontWeight: '500' }}>Language: {language}</Text>
+            <Text style={{ fontSize: 16, color: '#fff', fontWeight: '500' }}>Level: {level}</Text>
             </View>
 
             {/* Lesson List */}
-            <ScrollView
-            contentContainerStyle={styles.scrollContainer}
-            showsVerticalScrollIndicator={false}
-            >
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
             {lessons.map((lesson, index) => (
                 <TouchableOpacity
                 key={index}
-                style={[
-                    styles.lessonCard,
-                    lesson.completed && styles.lessonCardCompleted,
-                ]}
+                style={[styles.lessonCard, lesson.completed && styles.lessonCardCompleted]}
                 onPress={() => handleLessonPress(lesson)}
                 >
                 <View style={styles.lessonIconContainer}>
@@ -127,11 +108,12 @@
             ))}
             </ScrollView>
 
-            {/* Start Speaking Button */}
-            <TouchableOpacity style={styles.speechButton} onPress={handleSpeechPress}>
-            <MaterialIcons name="keyboard-voice" size={24} color="#fff" />
-            <Text style={styles.speechButtonText}>Start Speaking</Text>
+            {/* Change Language/Level */}
+            <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 20 }}>
+            <TouchableOpacity onPress={handleReset}>
+                <Text style={{ color: '#6366F1', fontSize: 16 }}>Change Language</Text>
             </TouchableOpacity>
+            </View>
         </View>
         </SafeAreaView>
     );
