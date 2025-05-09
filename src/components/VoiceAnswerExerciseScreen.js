@@ -1,74 +1,98 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Alert, Platform } from 'react-native';
-import Voice from '@react-native-voice/voice';
-
-// Optional: Uncomment if you want to handle permissions
-// import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import React, { useState, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { Audio } from 'expo-av';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
 export default function VoiceAnswerExerciseScreen() {
-  const [isListening, setIsListening] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [spokenText, setSpokenText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const recordingRef = useRef(null);
   const correctAnswer = 'hello';
 
-  useEffect(() => {
-    if (!Voice || typeof Voice.onSpeechStart !== 'undefined') {
-      Voice.onSpeechStart = () => setIsListening(true);
-      Voice.onSpeechEnd = () => setIsListening(false);
-      Voice.onSpeechResults = (event) => {
-        const text = event.value[0];
-        setSpokenText(text);
-        validateAnswer(text);
-      };
-    }
-
-    return () => {
-      try {
-        Voice.destroy().then(Voice.removeAllListeners);
-      } catch (e) {
-        console.warn('Voice cleanup error:', e);
-      }
-    };
-  }, []);
-
-  const startListening = async () => {
-    // Optional: Request microphone permission for Android
-    // if (Platform.OS === 'android') {
-    //   const permission = await request(PERMISSIONS.ANDROID.RECORD_AUDIO);
-    //   if (permission !== RESULTS.GRANTED) {
-    //     Alert.alert('Permission Denied', 'Microphone permission is required.');
-    //     return;
-    //   }
-    // }
-
-    if (!Voice || typeof Voice.start !== 'function') {
-      Alert.alert('Voice Module Error', 'Speech recognition is not available or not linked.');
-      return;
-    }
-
+  const startRecording = async () => {
     try {
-      await Voice.start('en-US');
-    } catch (e) {
-      console.error('Voice start error:', e);
-      Alert.alert('Error', e.message || 'Failed to start voice recognition.');
+      setSpokenText('');
+      const permission = await Audio.requestPermissionsAsync();
+      if (!permission.granted) {
+        Alert.alert('Permission Required', 'Microphone permission is needed to use this feature.');
+        return;
+      }
+
+      await Audio.setAudioModeAsync({ allowsRecordingIOS: true, playsInSilentModeIOS: true });
+
+      const { recording } = await Audio.Recording.createAsync(
+        Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+      );
+      recordingRef.current = recording;
+      setIsRecording(true);
+    } catch (error) {
+      console.error('Recording error:', error);
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      setIsRecording(false);
+      await recordingRef.current.stopAndUnloadAsync();
+      const uri = recordingRef.current.getURI();
+      recordingRef.current = null;
+
+      setLoading(true);
+      await sendAudioToWhisper(uri);
+    } catch (error) {
+      console.error('Stop recording error:', error);
+      setLoading(false);
+    }
+  };
+
+  const sendAudioToWhisper = async (uri) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', {
+        uri,
+        name: 'speech.wav',
+        type: 'audio/wav',
+      });
+
+      const response = await axios.post('http://192.168.1.188:8081/transcribe', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      const transcribed = response.data.text;
+      setSpokenText(transcribed);
+      validateAnswer(transcribed);
+    } catch (error) {
+      console.error('Transcription error:', error);
+      Alert.alert('Error', 'Failed to transcribe the audio.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const validateAnswer = (text) => {
-    if (text?.toLowerCase().includes(correctAnswer)) {
-      Alert.alert('Correct!', `You said: ${text}`);
+    if (text?.toLowerCase().includes(correctAnswer.toLowerCase())) {
+      Alert.alert('✅ Correct!', `You said: "${text}"`);
     } else {
-      Alert.alert('Try Again', `You said: ${text}`);
+      Alert.alert('❌ Try Again', `You said: "${text}"`);
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.question}>Say: "{correctAnswer}"</Text>
-      <Button
-        title={isListening ? 'Listening...' : 'Start Speaking'}
-        onPress={startListening}
-        disabled={isListening}
-      />
+
+      <TouchableOpacity
+        style={[styles.micButton, isRecording && styles.micButtonActive]}
+        onPress={isRecording ? stopRecording : startRecording}
+      >
+        <Ionicons name={isRecording ? 'stop' : 'mic'} size={36} color="#fff" />
+      </TouchableOpacity>
+
+      {loading && <ActivityIndicator size="large" color="#2196F3" style={styles.loader} />}
       <Text style={styles.result}>You said: {spokenText}</Text>
     </View>
   );
@@ -76,6 +100,17 @@ export default function VoiceAnswerExerciseScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
-  question: { fontSize: 24, marginBottom: 20 },
-  result: { fontSize: 18, marginTop: 20, color: 'blue' },
+  question: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
+  result: { fontSize: 18, marginTop: 20, color: 'blue', textAlign: 'center' },
+  loader: { marginTop: 10 },
+  micButton: {
+    backgroundColor: '#2196F3',
+    borderRadius: 50,
+    padding: 20,
+    marginTop: 10,
+    elevation: 4,
+  },
+  micButtonActive: {
+    backgroundColor: '#D32F2F',
+  },
 });
