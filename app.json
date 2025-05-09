@@ -24,7 +24,10 @@
       },
       "bundleIdentifier": "com.lingualift.app",
       "googleServicesFile": "./google-services.json",
-      "package": "com.lingualift.app"
+      "package": "com.lingualift.app",
+      "permissions": [
+        "RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
