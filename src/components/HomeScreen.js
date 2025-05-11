@@ -44,9 +44,31 @@
     };
 
     const handleSpeechPress = () => {
-        navigation.navigate('SpeechRecognitionScreen', {
-        question: 'How do you say "Hello" in Spanish?',
-        correctAnswer: 'Hola',
+        let question = '';
+        let correctAnswer = '';
+
+        if (language === 'Spanish' && level === 'Beginner') {
+        question = 'How do you say "Hello" in Spanish?';
+        correctAnswer = 'Hola';
+        } else if (language === 'English' && level === 'Beginner') {
+        question = 'Say the word "Hello" in English.';
+        correctAnswer = 'Hello';
+        } else if (language === 'Spanish' && level === 'Intermediate') {
+        question = 'Translate "Good morning" to Spanish.';
+        correctAnswer = 'Buenos días';
+        } else if (language === 'Spanish' && level === 'Advanced') {
+        question = 'Translate "I would like to reserve a table for two" in Spanish.';
+        correctAnswer = 'Quisiera reservar una mesa para dos';
+        } else {
+        question = 'Try saying "Hello".';
+        correctAnswer = 'Hello';
+        }
+
+        navigation.navigate('VoiceAnswerExercise', {
+        question,
+        correctAnswer,
+        language,
+        level,
         });
     };
 

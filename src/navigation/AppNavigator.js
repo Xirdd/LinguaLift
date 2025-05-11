@@ -14,15 +14,18 @@ import LanguageSelectionScreen from '../components/LanguageSelectionScreen';
 import LevelSelectionScreen from '../components/LevelSelectionScreen';
 import HomeScreen from '../components/HomeScreen';
 import ProfileScreen from '../components/ProfileScreen';
-import Basics1ExerciseScreen from '../components/Basics1ExerciseScreen';
-import VoiceAnswerExerciseScreen from '../components/VoiceAnswerExerciseScreen';
-import EnglishModule from '../components/EnglishModule'; // Ensure it's a valid component
-import SpanishModule from '../components/SpanishModule'; // Ensure it's a valid component
+import SpanishScreen from '../components/SpanishExerciseScreen';
+import EnglishScreen from '../components/EnglishExerciseScreen';
+import EnglishVoice from '../components/EnglishVoiceScreen';
+import SpanishVoice from '../components/SpanishVoiceScreen';
+import EnglishModule from '../components/EnglishModule';
+import SpanishModule from '../components/SpanishModule';
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
   const [initialRoute, setInitialRoute] = useState('Splash');
+  const [initialParams, setInitialParams] = useState({});
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -40,6 +43,7 @@ export default function AppNavigator() {
             setInitialRoute('LevelSelection');
           } else {
             setInitialRoute('Home');
+            setInitialParams({ language: selectedLanguage, level: selectedLevel });
           }
         }
         setIsReady(true);
@@ -49,7 +53,7 @@ export default function AppNavigator() {
     prepareNavigation();
   }, []);
 
-  if (!isReady) return null; // Optional: return a loading indicator
+  if (!isReady) return null; // Optional: add a loading spinner
 
   return (
     <NavigationContainer>
@@ -60,12 +64,19 @@ export default function AppNavigator() {
         <Stack.Screen name="Registration" component={RegistrationScreen} />
         <Stack.Screen name="LanguageSelection" component={LanguageSelectionScreen} />
         <Stack.Screen name="LevelSelection" component={LevelSelectionScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Basics1Exercise" component={Basics1ExerciseScreen} />
-        <Stack.Screen name="VoiceAnswerExercise" component={VoiceAnswerExerciseScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
 
-        {/* Ensure that you pass the correct components here */}
+        {/* Pass initial language and level to HomeScreen */}
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          initialParams={initialParams}
+        />
+
+        <Stack.Screen name="EnglishExercise" component={EnglishScreen} />
+        <Stack.Screen name="SpanishExercise" component={SpanishScreen} />
+        <Stack.Screen name="EnglishVoice" component={EnglishVoice} />
+        <Stack.Screen name="SpanishVoice" component={SpanishVoice} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="EnglishModule" component={EnglishModule} />
         <Stack.Screen name="SpanishModule" component={SpanishModule} />
       </Stack.Navigator>

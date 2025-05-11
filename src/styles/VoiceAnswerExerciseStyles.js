@@ -1,70 +1,52 @@
     import { StyleSheet } from 'react-native';
 
     export default StyleSheet.create({
-    container: {
+    safeContainer: {
         flex: 1,
         backgroundColor: '#050533',
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: 20,
-        justifyContent: 'center',
     },
-    question: {
+    practiceTitle: {
         fontSize: 22,
-        fontWeight: '600',
-        marginBottom: 16,
-        color: '#FFF',
-        textAlign: 'center',
-    },
-    button: {
-        backgroundColor: '#6366F1',
-        paddingVertical: 14,
-        paddingHorizontal: 24,
-        borderRadius: 30,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        shadowColor: '#6366F1',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-        elevation: 5,
-        marginBottom: 16,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 18,
-        marginLeft: 10,
-        fontWeight: '600',
-    },
-    feedback: {
-        fontSize: 20,
-        fontWeight: '500',
-        textAlign: 'center',
-        marginTop: 16,
-    },
-    correct: {
-        color: '#22c55e',
-    },
-    incorrect: {
-        color: '#ef4444',
-    },
-    recognized: {
-        fontSize: 18,
-        color: '#E0E0E0',
-        textAlign: 'center',
-        marginTop: 10,
-    },
-    retryButton: {
-        backgroundColor: '#f59e0b',
-        padding: 12,
-        marginTop: 16,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    retryButtonText: {
-        color: '#fff',
-        fontSize: 16,
         fontWeight: 'bold',
+        color: '#A5B4FC',
+        marginBottom: 12,
+        textAlign: 'center',
     },
-    
+    practiceQuestion: {
+        fontSize: 20,
+        color: '#fff',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    feedbackText: {
+        marginTop: 20,
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#fff',
+        textAlign: 'center',
+    },
+    optionButton: {
+        paddingVertical: 12,
+        paddingHorizontal: 30,
+        borderRadius: 30,
+        marginTop: 20,
+    },
+    correctOption: {
+        backgroundColor: '#4ADE80',
+    },
+    wrongOption: {
+        backgroundColor: '#F87171',
+    },
+    optionText: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#fff',
+    },
     });
+    // This code is a React Native component that allows users to practice speaking sentences.

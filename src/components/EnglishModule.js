@@ -11,8 +11,8 @@
     import styles from '../styles/HomeScreenStyles';
 
     const lessons = [
-    { title: 'Basics 1', icon: 'language', completed: true },
-    { title: 'Basics 2', icon: 'book', completed: false },
+    { title: 'English Quiz', icon: 'language', completed: false },
+    { title: 'English Exercise', icon: 'book', completed: false },
     ];
 
     export default function EnglishModule({ navigation }) {
@@ -31,11 +31,11 @@
 
     const handleLessonPress = (lesson) => {
         switch (lesson.title) {
-        case 'Basics 1':
-            navigation.navigate('Basics1Exercise');
+        case 'English Quiz':
+            navigation.navigate('EnglishExercise');
             break;
-        case 'Basics 2':
-            navigation.navigate('VoiceAnswerExercise');
+        case 'English Exercise':
+            navigation.navigate('EnglishVoice');
             break;
         }
     };
@@ -111,7 +111,7 @@
             {/* Change Language/Level */}
             <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 20 }}>
             <TouchableOpacity onPress={handleReset}>
-                <Text style={{ color: '#6366F1', fontSize: 16 }}>Change Language/Level</Text>
+                <Text style={{ color: '#fff', fontSize: 16 }}>Change Language/Level</Text>
             </TouchableOpacity>
             </View>
         </View>
