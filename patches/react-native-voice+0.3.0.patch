@@ -1,0 +1,12 @@
+    diff --git a/node_modules/react-native-voice/android/build.gradle b/node_modules/react-native-voice/android/build.gradle
+    index e69de29..b9b1e20 100644
+    --- a/node_modules/react-native-voice/android/build.gradle
+    +++ b/node_modules/react-native-voice/android/build.gradle
+    @@
+    dependencies {
+    -    compile fileTree(dir: 'libs', include: ['*.jar'])
+    +    implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation 'androidx.appcompat:appcompat:1.6.1'
+        implementation 'com.facebook.react:react-native:+'
+        testImplementation 'junit:junit:4.13.2'
+    }

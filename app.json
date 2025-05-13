@@ -26,7 +26,8 @@
       "googleServicesFile": "./google-services.json",
       "package": "com.lingualift.app",
       "permissions": [
-        "RECORD_AUDIO"
+        "RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -44,6 +45,11 @@
       ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b94e6cfc-131a-4ca2-89fa-0a34375395ed"
+      }
+    }
   }
 }
